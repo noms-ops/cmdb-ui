@@ -25,7 +25,7 @@ Ext.define("Ext.ux.exporter.Button", {
     constructor: function(config) {
       config = config || {};
 
-      this.initConfig();
+      // this.initConfig();
       Ext.ux.exporter.Button.superclass.constructor.call(this, config);
 
       var self = this;

@@ -19,11 +19,11 @@ limitations under the License.
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 	<title>Ops Inv (ext4)</title>
-	<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all-debug.css" />
+	<link rel="stylesheet" type="text/css" href="/extjs5/build/packages/ext-theme-gray/build/resources/ext-theme-gray-all-debug.css" />
 	<link rel="stylesheet" type="text/css" href="cmdb.css" />
-	<link rel="stylesheet" type="text/css" href="ux/grid/css/GridFilters.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="ux/grid/css/GridFilters.css" /> -->
 	<link rel="stylesheet" type="text/css" href="ux/panel/css/Rack.css" />
-	<link rel="stylesheet" type="text/css" href="extjs/resources/ext-theme-gray/ext-theme-gray-all.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="extjs/resources/ext-theme-gray/ext-theme-gray-all.css" /> -->
 	<link rel="stylesheet" type="text/css" href="highlight.css" />
 	<link rel="stylesheet" type="text/css" href="custom.css" />
 	<link rel="stylesheet" type="text/css" href="integrationlibs/GraphitePanel.css" />
@@ -34,8 +34,8 @@ limitations under the License.
 <div class="loading-indicator" style="z-index:20000;"><img src="images/loading.gif" style="width:16px;height:16px;" align="absmiddle"> Loading...</div>
 </div> 
 
-<script type="text/javascript" src="extjs/bootstrap.js"></script>
-<script type="text/javascript" src="extjs/ext-theme-gray.js"></script>
+<script type="text/javascript" src="/extjs5/build/bootstrap.js"></script>
+<script type="text/javascript" src="/extjs5/build/packages/ext-theme-gray/build/ext-theme-gray.js"></script>
 <script type="text/javascript" src="ux/exporter/downloadify.min.js"></script>
 <script type="text/javascript" src="ux/exporter/swfobject.js"></script>
 <script>
@@ -57,11 +57,12 @@ function loadjscssfile(filename, filetype){
 }
 
 Ext.Loader.setConfig({
-		enabled : true
+		enabled : true,
+		paths: {
+			'Ext.ux':'ux'
+		}
 	});
-	
-Ext.Loader.setPath('Ext.ux','ux');
-	
+		
 Ext.flash.Component.EXPRESS_INSTALL_URL = "exporter/expressInstall.swf";
 
 Ext.require([
@@ -69,8 +70,6 @@ Ext.require([
     'Ext.grid.*',
     'Ext.tree.*',
     'Ext.state.*',
-	'Ext.ux.form.MultiSelect',
-    'Ext.ux.form.ItemSelector',
 	'Ext.ux.exporter.Button',
 	'Ext.ux.grid.ColumnsConfig',
 	'Ext.ux.grid.FiltersFeature',
@@ -243,7 +242,7 @@ PP.saveRecord=function(r,callback){
 			}
 			else
 			{
-		        Ext.Msg.alert('Update Failed', 'There was an error saving this record: <br> ' + op.response.responseText);
+		        Ext.Msg.alert('Update Failed', 'There was an error saving this record: <br> ' + op.error.response.responseText);
 			}
 			if(typeof callback =='function')
 			{
@@ -716,12 +715,9 @@ Ext.onReady(function(){
 	}
 	// set default search to include status!=decommissioned
 	else
-	{		
-		sys_grid.addSearchBar();
-		var new_bar=sys_grid.getDockedItems('toolbar[dock=top]')[0];
-		new_bar.items.items[1].setValue('status');
-		new_bar.items.items[2].setValue('!=');
-		new_bar.items.items[3].setValue('decommissioned');
+	{	
+		var defaultSearch = PP.config.default_search || ["status!~decommissioned|disposed","fqdn~"];
+		sys_grid.setupSearch(defaultSearch)
 	}
 	var quicklink_keys=Object.keys(PP.quicklinks);
 	for(var i=0; i < quicklink_keys.length ; i++){
