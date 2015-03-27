@@ -370,7 +370,11 @@ Ext.onReady(function(){
 			service_view_panel.reset();	
 			if(environtment_services_panel.selectedService)
 			{
-				service_view_panel.load(environtment_services_panel.getStore().getAt(environtment_services_panel.getStore().find('name',environtment_services_panel.selectedService)));
+				var lookup_selectedService=environtment_services_panel.getStore().getAt(environtment_services_panel.getStore().find('name',environtment_services_panel.selectedService));
+				if(lookup_selectedService)
+				{				
+					service_view_panel.load();
+				}
 			}
 		}
 	});
