@@ -373,7 +373,7 @@ Ext.onReady(function(){
 				var lookup_selectedService=environtment_services_panel.getStore().getAt(environtment_services_panel.getStore().find('name',environtment_services_panel.selectedService));
 				if(lookup_selectedService)
 				{				
-					service_view_panel.load();
+					service_view_panel.load(lookup_selectedService);
 				}
 			}
 		}
