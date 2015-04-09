@@ -36,6 +36,7 @@ limitations under the License.
 
 <script type="text/javascript" src="/extjs5/build/bootstrap.js"></script>
 <script type="text/javascript" src="/extjs5/build/packages/ext-theme-gray/build/ext-theme-gray.js"></script>
+<script type="text/javascript" src="/extjs5/build/packages/sencha-charts/build/sencha-charts-debug.js"></script>
 <script type="text/javascript" src="ux/exporter/downloadify.min.js"></script>
 <script type="text/javascript" src="ux/exporter/swfobject.js"></script>
 <script>
@@ -67,6 +68,7 @@ Ext.flash.Component.EXPRESS_INSTALL_URL = "exporter/expressInstall.swf";
 
 Ext.require([
     'Ext.data.*',
+    'Ext.chart.*',
     'Ext.grid.*',
     'Ext.tree.*',
     'Ext.state.*',
@@ -174,6 +176,7 @@ else {
 <script type="text/javascript" src="lib/cmdb.js"></script>
 <script type="text/javascript" src="lib/AuditPanel.js"></script>
 <script type="text/javascript" src="lib/SystemGrid.js"></script>
+<script type="text/javascript" src="lib/SystemChart.js"></script>
 <script type="text/javascript" src="lib/EntityEditorGrid.js"></script>
 <script type="text/javascript" src="lib/ChangesGrid.js"></script>
 <script type="text/javascript" src="lib/SystemViewPanel.js"></script>
@@ -499,9 +502,6 @@ Ext.onReady(function(){
 										listeners:{
 											'expand':function(chart){
 												chart.store.clearFilter();
-											},
-											focus: function(f){
-												f.onTriggerClick();
 											}
 										},
 										store:[['column','Column'],['stackedcolumn','Stacked Column'],['stackedpercentcolumn','Stacked Column w/ %']]
@@ -526,9 +526,6 @@ Ext.onReady(function(){
 									listeners:{
 										'expand':function(c){
 											c.store.clearFilter();
-										},	
-										focus: function(f){
-													f.onTriggerClick();
 										}
 									},
 									store:[['count','Count'],['sum','Sum']]
@@ -539,9 +536,6 @@ Ext.onReady(function(){
 									listeners:{
 										'expand':function(c){
 											c.store.clearFilter();
-										},
-										focus: function(f){
-													f.onTriggerClick();
 										}
 									},
 									name: 'field1',
@@ -560,9 +554,6 @@ Ext.onReady(function(){
 									listeners:{
 										'expand':function(c){
 											c.store.clearFilter();
-										},
-										focus: function(f){
-													f.onTriggerClick();
 										}
 									},
 									name: 'key1',
@@ -581,9 +572,6 @@ Ext.onReady(function(){
 										listeners:{
 											'expand':function(c){
 												c.store.clearFilter();
-											},
-											focus: function(f){
-														f.onTriggerClick();
 											}
 										},
 										name: 'key2',
