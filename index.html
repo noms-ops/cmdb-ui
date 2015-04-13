@@ -20,6 +20,7 @@ limitations under the License.
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 	<title>Ops Inv (ext4)</title>
 	<link rel="stylesheet" type="text/css" href="/extjs5/build/packages/ext-theme-gray/build/resources/ext-theme-gray-all-debug.css" />
+	<link rel="stylesheet" type="text/css" href="/extjs5/build/packages/sencha-charts/build/classic/resources/sencha-charts-all-debug.css" />
 	<link rel="stylesheet" type="text/css" href="cmdb.css" />
 	<!-- <link rel="stylesheet" type="text/css" href="ux/grid/css/GridFilters.css" /> -->
 	<link rel="stylesheet" type="text/css" href="ux/panel/css/Rack.css" />
@@ -625,7 +626,17 @@ Ext.onReady(function(){
 								title:'Chart Data',
 								id: 'chart_grid',
 								columns: [],
-								store: new Ext.data.JsonStore({fields:['tmp']})
+								store: new Ext.data.JsonStore({fields:['tmp']}),
+								listeners: {
+									selectionchange: function(model,records)
+									{
+										var fields;
+										if(records[0])
+										{
+											PP.highlightBar(records[0]);
+										}
+									}
+								}
 							}
 						]
 					},
