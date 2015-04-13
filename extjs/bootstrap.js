@@ -1,22 +1,20 @@
 /*
-This file is part of Ext JS 4.2
+This file is part of Ext JS 5.1.0.107
 
-Copyright (c) 2011-2013 Sencha Inc
+Copyright (c) 2011-2014 Sencha Inc
 
 Contact:  http://www.sencha.com/contact
 
-GNU General Public License Usage
-This file may be used under the terms of the GNU General Public License version 3.0 as
-published by the Free Software Foundation and appearing in the file LICENSE included in the
-packaging of this file.
+Pre-release code in the Ext repository is intended for development purposes only and will
+not always be stable. 
 
-Please review the following information to ensure the GNU General Public License version 3.0
-requirements will be met: http://www.gnu.org/copyleft/gpl.html.
+Use of pre-release code is permitted with your application at your own risk under standard
+Ext license terms. Public redistribution is prohibited.
 
-If you are unsure which license is appropriate for your use, please contact the sales department
-at http://www.sencha.com/contact.
+For early licensing, please contact us at licensing@sencha.com
 
-Build date: 2013-05-16 14:36:50 (f9be68accb407158ba2b1be2c226a6ce1f649314)
+Version: 5.1.0.107 Build date: 2014-12-10 12:26:01 (2e9aed02ab6d3ef7b0ec406edea1e8581413381e)
+
 */
 /**
  * Load the library located at the same path with this file
@@ -73,5 +71,5 @@ Build date: 2013-05-16 14:36:50 (f9be68accb407158ba2b1be2c226a6ce1f649314)
     }
 
     document.write('<script type="text/javascript" charset="UTF-8" src="' + 
-        path + 'ext-all' + (isDevelopment ? '-dev' : '') + '.js"></script>');
+        path + 'ext-all' + (isDevelopment ? '-debug' : '') + '.js"></script>');
 })();
