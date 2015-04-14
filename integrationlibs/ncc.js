@@ -137,7 +137,16 @@ Ext.define('instanceLocationModel',
     proxy:
     {
         type: 'rest',
-        reader: 'array',
+        reader: {
+            type: 'array',
+            transform: function(data) {
+                for(var i=0; i < data.length; i++)
+                {
+                    data[i] = [data[i]];
+                }
+                return data;
+            }
+        },
         timeout: 500000,
         startParam: undefined,
         pageParam: undefined,
@@ -255,17 +264,6 @@ PP.rebootInstance = function(sys)
         {
             Ext.Msg.hide();
             PP.notify.msg('Success', 'Reboot request has been accepted');
-
-            ///// not sure if these two lines are needed with nccapiv2
-            // sys.set('status','terminating');
-            // sys.save();
-
-
-            // if(resp.responseText)
-            // {
-            // 	var inst=Ext.decode(resp.responseText);
-            // 	var Sys=Ext.ModelManager.getModel('system');
-            // }
         },
         failure: function(resp)
         {
@@ -319,17 +317,6 @@ PP.terminateInstance = function(sys)
         {
             Ext.Msg.hide();
             PP.notify.msg('Success', 'Terminate request has been accepted');
-
-            ///// not sure if these two lines are needed with nccapiv2
-            // sys.set('status','terminating');
-            // sys.save();
-
-
-            // if(resp.responseText)
-            // {
-            // 	var inst=Ext.decode(resp.responseText);
-            // 	var Sys=Ext.ModelManager.getModel('system');
-            // }
         },
         failure: function(resp)
         {
@@ -378,71 +365,7 @@ PP.createNewInstance = function(config)
                             Ext.getCmp('system_grid').loadSearch(['status!=decommissioned', 'fqdn~' + sys.name]);
                         }
                     }
-                });
-
-
-
-                // Ext.Ajax.request({
-                // 	url: op.response.getResponseHeader('location').replace(/http:\/\/.*?\//,PP.config.ncc_api_path),
-                // 	timeout: 520000,
-                // 	success:function(resp){
-                // 		if(resp.responseText)
-                // 		{
-                // 			var Sys=Ext.ModelManager.getModel('system');
-                // 			Sys.load(inst.hostname,{
-                // 				success:function(system){
-
-                // 					//  no longer needed with ncc_api v2
-                // 					////////////
-                // 					// if(config.role)
-                // 					// {
-                // 					// 	system.set('roles',config.role);
-                // 					// }
-                // 					// if(config.tags)
-                // 					// {
-                // 					// 	system.set('tags',config.tags.toUpperCase().replace(/\s/,'_'));
-                // 					// }
-                // 					// system.set('status','building');
-                // 					// if(config.data_center_code)
-                // 					// {
-                // 					// 	system.set('data_center_code',config.data_center_code);
-                // 					// }
-                // 					// system.set('created_by',PP.user.username);
-                // 					// system.set('environment_name',config.environment_name);
-                // 					// system.save({
-                // 					// 	callback: function(recs){
-                // 							// Ext.MessageBox.hide();
-                // 							// var instanceName=system.get('fqdn');
-                // 							// Ext.MessageBox.show({
-                // 							// 	title: 'Instance Created',
-                // 							// 	icon: Ext.MessageBox.INFO,
-                // 							// 	msg: 'Instance ' + instanceName + ' has been started.',
-                // 							// 	buttons: Ext.MessageBox.OKCANCEL,
-                // 							// 	buttonText:{
-                // 							// 		ok: 'Lookup ' + instanceName
-                // 							// 	},
-                // 							// 	fn: function(btn){
-                // 							// 		if(btn == 'ok')
-                // 							// 		{
-                // 							// 			Ext.getCmp('system_grid').loadSearch(['status!=decommissioned','fqdn~' + instanceName]);
-                // 							// 		}
-                // 							// 	}
-                // 							// });
-                // 					// 	}
-                // 					// });
-                // 				},
-                // 				failure: function(){
-                // 					Ext.MessageBox.hide();
-                // 					Ext.Msg.alert("Error",'Failed to find new instance in cmdb.  Server returned ' + op.error.status + ": " + op.error.statusText);								
-                // 				}
-                // 			});						
-                // 		}
-                // 	},
-                // 	failure: function(){
-                // 		Ext.MessageBox.hide();
-                // 		Ext.Msg.alert("Error",'Failed to lookup instance against the ncc API.  Server returned ' + op.error.status + ": " + op.error.statusText);													
-                // 	}
-                // });			
+                });		
             }
             else // create instance didn't work. hide the status and show an error dialog
             {
@@ -451,10 +374,6 @@ PP.createNewInstance = function(config)
             }
         }
     });
-    // setTimeout(function(){
-    // 	Ext.MessageBox.hide();
-    // },3000);
-
 }
 
 PP.makeInstanceRequest = function(config)
@@ -526,8 +445,9 @@ PP.newInstanceWindow = function()
         entity: 'system',
         labels: true
     });
+
     new_instance_env_combo.value = PP.config.default_environment || null;
-    // new_instance_env_combo.store.load();
+    new_instance_env_combo.forceSelection=false;
     var newinstance_window = new Ext.Window(
     {
         title: 'New NOMS Instance',
