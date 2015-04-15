@@ -30,7 +30,7 @@ if (PP.config.jiraRESTbridge) {
         }
     });
 }
-if (!Ext.ModelManager.getModel('jira_issue')) {
+if (!PP.models.base.schema.getEntity('jira_issue')) {
 
     if (PP.config.jiraRESTbridge) {
         Ext.define('jira_issue', {
