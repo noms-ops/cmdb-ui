@@ -31,7 +31,7 @@ Ext.define('graphtemplate', {
         },
         reader: {
             type: 'json',
-            root: 'templates'
+            rootProperty: 'templates'
         }
     }
 });
@@ -229,7 +229,7 @@ Ext.define('Graphite.GraphitePanel', {
                     },
                     reader: {
                         type: 'json',
-                        root: 'state.graphs',
+                        rootProperty: 'state.graphs',
                         record: 1
                     }
                 },
