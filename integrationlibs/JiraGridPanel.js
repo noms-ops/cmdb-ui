@@ -83,7 +83,7 @@ if (!PP.models.base.schema.getEntity('jira_issue')) {
                 type: 'rest',
                 reader: {
                     type: 'json',
-                    root: 'issues'
+                    rootProperty: 'issues'
                 },
                 noCache: false,
                 startParam: undefined,
@@ -129,21 +129,18 @@ Ext.define('PP.JiraGridPanel', {
         width: 75,
         dataIndex: 'key',
         sortable: true,
-        id: 'key',
         renderer: jiraLinkRender
     }, {
         text: 'Status',
         width: 80,
         dataIndex: 'status',
         sortable: true,
-        id: 'status',
         renderer: jiraStatusRender
     }, {
         text: 'Title',
         width: 300,
         dataIndex: 'summary',
-        sortable: true,
-        id: 'summary'
+        sortable: true
     }],
     listeners: {
         'activate': {
