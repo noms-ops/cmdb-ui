@@ -139,7 +139,7 @@ if (status >= 200 && status < 300) {
 		Graphite.config=PP.config.graphite;
 
 	}
-	if(PP.config.jira)
+	if(PP.config.jira.enabled)
 	{
 		console.log('loading custom extension for Jira')
 		Ext.Loader.loadScript("integrationlibs/JiraGridPanel.js");
@@ -159,7 +159,7 @@ if (status >= 200 && status < 300) {
 		console.log('loading custom extension for NCC (cloud mgmt)')
 		Ext.Loader.loadScript("integrationlibs/ncc.js");		
 	}
-	if(PP.config.rundeck_api)
+	if(PP.config.rundeck.enabled)
 	{
 		console.log('loading custom extension for rundeck')
 		Ext.Loader.loadScript("integrationlibs/Rundeck.js");		

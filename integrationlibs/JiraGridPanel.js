@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-if (PP.config.jiraRESTbridge) {
+if (PP.config.jira.jiraRESTbridge) {
     Ext.Ajax.request({
-        url: PP.config.jira_path + 'status',
+        url: PP.config.jira.api_path + 'status',
         method: 'GET',
         failure: function(r, o) {
             Ext.Msg.confirm('Error', 'Unable to access Jira. Proceed to Jira and authorize CMDB to make requests?',
                 function(btn) {
                     if (btn != 'no') {
                         var currentLocation = window.location;
-                        window.location = currentLocation.origin + PP.config.jira_path + "status" + "?callback=" + currentLocation.href;
+                        window.location = currentLocation.origin + PP.config.jira.api_path + "status" + "?callback=" + currentLocation.href;
                     } else {
-                        PP.config.jira = false;
+                        PP.config.jira.enabled = false;
                     }
                 });
             return;
@@ -32,7 +32,7 @@ if (PP.config.jiraRESTbridge) {
 }
 if (!PP.models.base.schema.getEntity('jira_issue')) {
 
-    if (PP.config.jiraRESTbridge) {
+    if (PP.config.jira.jiraRESTbridge) {
         Ext.define('jira_issue', {
             extend: 'Ext.data.Model',
             idProperty: 'key',
@@ -90,7 +90,7 @@ if (!PP.models.base.schema.getEntity('jira_issue')) {
                 pageParam: undefined,
                 limitParam: undefined,
                 filterParam: undefined,
-                url: PP.config.jira_path + 'search'
+                url: PP.config.jira.api_path + 'search'
             }
         });
     } else {
@@ -108,7 +108,7 @@ if (!PP.models.base.schema.getEntity('jira_issue')) {
                 pageParam: undefined,
                 limitParam: undefined,
                 filterParam: undefined,
-                url: PP.config.jira_path + 'issue/'
+                url: PP.config.jira.api_path + 'issue/'
             }
         });
     }
@@ -205,7 +205,7 @@ Ext.define('PP.JiraGridPanel', {
 
 
 function jiraLinkRender(value, o, r, row, col, store) {
-    return "<a target=_blank href='https://" + PP.config.jira_host + "/browse/" + r.get('key') + "'>" + value + "</a>";
+    return "<a target=_blank href='https://" + PP.config.jira.jira_host + "/browse/" + r.get('key') + "'>" + value + "</a>";
 }
 
 function jiraStatusRender(value) {
