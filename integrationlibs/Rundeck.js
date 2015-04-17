@@ -15,8 +15,8 @@
 
 PP.runPuppet=function(hostname){
 // rundeck api call to execute puppet with defined job
-	var rundeckPuppetUrl=PP.config['rundeck_path']+ '/api/1/job/' + PP.config['rundeck_puppet_job_id'];
-	rundeckPuppetUrl= rundeckPuppetUrl +  '/run?argString=-requestor+' + PP.user.username + '&authtoken=' + PP.config['rundeck_api_token'];
+	var rundeckPuppetUrl=PP.config.rundeck['api_path']+ '/api/1/job/' + PP.config.rundeck['puppet_job_id'];
+	rundeckPuppetUrl= rundeckPuppetUrl +  '/run?argString=-requestor+' + PP.user.username + '&authtoken=' + PP.config.rundeck['api_token'];
 	rundeckPuppetUrl= rundeckPuppetUrl +  '&hostname=' + hostname;
 	Ext.Ajax.request({
 		method:'GET',
@@ -27,7 +27,7 @@ PP.runPuppet=function(hostname){
 			// PP.notify.msg('Success','Puppet Run iniated via Rundeck');
 			PP.response=resp;
 			var executionId=Ext.dom.Query.selectNode('execution[id]',resp.responseXML).getAttribute('id');
-			PP.jobOutput(PP.config['rundeck_puppet_job_id'],executionId, 'puppet run on ' + hostname);
+			PP.jobOutput(PP.config.rundeck['puppet_job_id'],executionId, 'puppet run on ' + hostname);
 			// if(resp.responseText)
 			// {
 			// 	var inst=Ext.decode(resp.responseText);
@@ -41,7 +41,7 @@ PP.runPuppet=function(hostname){
 }
 
 PP.jobOutput=function(job,executionId,title){
-	var executionUrl=PP.config['rundeck_path']+ '/api/5/execution/' + executionId + '/output';
+	var executionUrl=PP.config.rundeck['api_path']+ '/api/5/execution/' + executionId + '/output';
 	var outputGrid= new PP.execOutputGrid();
 	var outputWindow=new Ext.Window({
 		title: 'Execution Output ' + title,
@@ -98,8 +98,8 @@ Ext.define('PP.execOutputStore',{
 	model: 'execOutput',
 	proxy: {
 		type: 'ajax',
-		url: PP.config['rundeck_path']+ '/api/5/execution/',
-		urlBase: PP.config['rundeck_path']+ '/api/5/execution/',
+		url: PP.config.rundeck['api_path']+ '/api/5/execution/',
+		urlBase: PP.config.rundeck['api_path']+ '/api/5/execution/',
 		reader:{
 			type: 'xml',
 			record: 'entries > entries',
@@ -112,7 +112,7 @@ Ext.define('PP.execOutputStore',{
 			var me=this;
 			if(request.params.id)
 			{
-				url=url + request.params.id + '/output?authtoken=' +  PP.config['rundeck_api_token'];
+				url=url + request.params.id + '/output?authtoken=' +  PP.config.rundeck['api_token'];
 			}
 			else
 			{
